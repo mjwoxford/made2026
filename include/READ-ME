@@ -1,0 +1,28 @@
+This directory contains all include files for the DKB system. Wherever they are included, relative pathnames (e.g. "../include/cosmetic.h") are provided.
+
+Selecting A Destination System
+------------------------------
+
+Before compiling any source files, you must select a destination system. 
+Currently, two options are provided:
+
+	- Sun Workstations running SunOS, supporting RPCs
+	- Standard UNIX installations
+
+Sun Workstations
+----------------
+
+Copy the file sun.h into select.h by using the command :
+	
+	cp sun.h select.h
+
+then edit the file hosts.h to meet the requirements of your installation.
+
+UNIX Systems
+------------
+
+Copy the file unix.h into select.h by using the command :
+	
+	cp unix.h select.h
+
+MJW Jan 1990

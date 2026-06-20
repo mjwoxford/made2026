@@ -1,0 +1,37 @@
+;;; 	animals.masc
+;;;
+;;; 	M J Wooldridge
+;;; 	March 1990
+
+options:
+	dkbs
+	reader
+	sunview
+	wintool
+;;;	debugger
+
+system:
+	animals
+
+        agent: birds        ;;; Knows how to identify birds
+
+		groups:		system classifier
+		sups:		user
+		subs:		carnivores
+            	language:   	pop11
+		host:		turing
+
+        agent: carnivores   ;;; Knows how to identify carnivores
+
+		groups:		system classifier
+		sups:		user
+		subs:		birds
+            	language:   	pop11
+		host:		papert
+
+        agent:  user        ;;; The initiator agent 
+
+		groups:		system
+		subs:		birds carnivores
+            	language:   	pop11  
+		host:		papert 

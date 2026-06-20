@@ -1,0 +1,10 @@
+#	servers
+#
+#	M J Wooldridge
+#	March 1991
+#
+#	Shell script to install server programs
+#
+
+rem_dkb_svc &
+rem_inst_svc &

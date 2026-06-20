@@ -1,0 +1,58 @@
+
+/*  haemolytic.p
+ *
+ *  Rebecca Elks
+ *  July 1990
+ *
+ *  Main program for the 'Haemolytic Anaemia' agent.
+ */
+
+vars	feline_agent_name = "haemolytic";
+
+   	/* load the shell */
+
+compile('../libs/shell.p');
+
+	/* load the environment model */
+
+compile('../haemolytic/haemolytic_model.p');
+
+    	/* now load the rules */
+
+compile('../haemolytic/haemolytic_rules.p');
+
+    	/* now the startup function */
+
+define  startup();
+
+	;;; true -> trace_flag;
+	false -> mrc_flag;
+	false -> fc_flag;
+
+	investigate(
+	[
+		lethargy weakness appetite duration respiration
+		colour pulse_character heart_rate abdomen murmur
+		weight
+	]);
+
+	true -> mrc_flag;
+
+    	investigate([haemobartonella_positive]);
+
+enddefine;
+
+	/* now load the main function */
+
+compile('../libs/main.p');
+
+	/* and start... */
+
+main(	feline_script_rules,
+	feline_strategy_rules,
+	feline_base_beliefs,
+	feline_default_bindings,
+	feline_conditional_matchs
+);
+
+	/* THE END */

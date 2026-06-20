@@ -1,0 +1,91 @@
+Sequence  : 22 From : reader To : carnivores Type : (Default: Respond)
+Value     : y
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 23 From : carnivores To : wintool Type : (Default: Respond)
+Value     : Active%eats_meat%Backward chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 24 From : carnivores To : wintool Type : (Default: Respond)
+Value     : Active%eats_meat%Forward chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 25 From : carnivores To : user Type : (Default: Request)
+Value     : [response <true>]
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 26 From : carnivores To : wintool Type : (Default: Respond)
+Value     : Sleeping% * None *%Waiting for request
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 27 From : user To : wintool Type : (Default: Respond)
+Value     : Active%is_carnivore%Backward chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 28 From : user To : wintool Type : (Default: Respond)
+Value     : Active%is_carnivore%Forward chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 29 From : user To : wintool Type : (Default: Respond)
+Value     : Active%is_carnivore%Meta chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 30 From : user To : wintool Type : (Default: Respond)
+Value     : Active%black_stripes%Backward chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 31 From : user To : wintool Type : (Default: Respond)
+Value     : Sleeping%black_stripes%Asking black_stripes
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 32 From : user To : reader Type : (Default: Inform)
+Value     : Is the animal covered in black stripes
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 33 From : user To : reader Type : (Default: Inform)
+Value     : 
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 34 From : user To : reader Type : (Default: Inform)
+Value     : Please answer y or n
+Sequence  : 36 From : reader To : user Type : (Default: Respond)
+Value     : y
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 37 From : user To : wintool Type : (Default: Respond)
+Value     : Active%black_stripes%Backward chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 38 From : user To : wintool Type : (Default: Respond)
+Value     : Active%black_stripes%Forward chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 39 From : user To : wintool Type : (Default: Respond)
+Value     : Active%black_stripes%Meta chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 40 From : user To : wintool Type : (Default: Respond)
+Value     : Active%black_stripes%Forward chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 41 From : user To : wintool Type : (Default: Respond)
+Value     : Active%black_stripes%Meta chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 42 From : user To : reader Type : (Default: Inform)
+Value     : The animal was a Tiger
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 43 From : user To : reader Type : (Default: Inform)
+Value     : 
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 44 From : user To : reader Type : (Default: Inform)
+Value     : 
+*** Quitting Normally
+
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 45 From : user To : wintool Type : (Default: Respond)
+Value     : Active%another_go%Backward chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 46 From : user To : wintool Type : (Default: Respond)
+Value     : Sleeping%another_go%Asking another_go
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 47 From : user To : reader Type : (Default: Inform)
+Value     : Do you want another go?
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 48 From : user To : reader Type : (Default: Inform)
+Value     : 
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 49 From : user To : reader Type : (Default: Inform)
+Value     : Please answer y or n
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 50 From : user To : reader Type : (Default: Request)
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 35 From : user To : reader Type : (Default: Request)
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

@@ -1,0 +1,64 @@
+;;; 	feline2.masc
+;;;
+;;; 	M J Wooldridge
+;;; 	September 1990
+
+;;;	FELINE is an expert system composed of a group of expert agents
+;;;	which together co-operate to model the clinical diagnostic procedures
+;;;	required to identify the causes of anaemia in cats. 
+
+;;;	In the version 2 of feline (defined by this file), agents use an
+;;;	extended fisrt oredr predicate logic to deliberate about what
+;;;	action they should perform before performing it.
+
+options:
+	dkbs
+	reader
+	sunview
+	wintool
+;;;	use_mp
+
+system:	feline2
+
+	;;; 	The agent `blood' is an expert on blood tests.
+
+        agent: blood
+
+		groups:		system 
+		subs:		aplasia
+            	language:   	pop11
+		host:		winograd
+
+	;;;	The agent `haemorrhagic' is an expert on haemorrhagic anaemia
+
+       agent: 	haemorrhagic
+
+		groups:		system 
+          	language:   	pop11
+		host:		schank
+
+	;;;	The agent `aplasia' is an expert on aplasia
+
+        agent: 	aplasia       
+
+		groups:		system
+           	language:   	pop11  
+		host:		schank 
+
+	;;;	The agent `haemolytic' is an expert on haemolytic anaemia
+
+	agent:	haemolytic
+
+		groups:		system
+		language:	pop11
+		host:		schank
+
+	;;;	The agent `initial' is the initiator.
+
+	agent:	initial
+
+		groups:		system
+		language:	pwmpop11
+		host:		schank
+
+;;;	The end.

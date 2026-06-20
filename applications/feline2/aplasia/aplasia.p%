@@ -1,0 +1,58 @@
+
+/*  aplasia.p
+ *
+ *  Rebecca Elks
+ *
+ *  July 1990
+ *
+ *  Main program for the 'aplasia' agent
+ */
+
+vars	feline_agent_name = "aplasia";
+
+	/* first load the shell */
+
+compile('../libs/shell.p');
+
+	/* now load the environment model */
+
+compile('../aplasia/aplasia_model.p');
+
+	/* now load the rules */
+
+compile('../aplasia/aplasia_rules.p');
+
+	/* now the startup function */
+
+define  startup();
+
+	;;; true -> trace_flag;
+	false -> fc_flag;
+	false -> mrc_flag;
+	investigate(
+	[
+		duration temperature appetite weight drinking urination
+		lethargy colour icterus respiration neutered sex
+	]);
+
+	true -> mrc_flag;
+
+	investigate(
+	[
+		drug_admin
+	]);
+enddefine;
+
+	/* load the main function */
+
+compile('../libs/main.p');
+
+	/* and start... */
+
+main(	feline_script_rules,
+	feline_strategy_rules,
+	feline_base_beliefs,
+	feline_default_bindings,
+	feline_conditional_matchs
+);
+	

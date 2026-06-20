@@ -1,0 +1,26 @@
+#	Makefile for .../aplications/feline
+#
+#	M J Wooldridge
+#	November 1990
+#
+
+dump	:
+	-lpr main/feline.masc
+	-lpr initial/initial.p initial/initial_screen.p initial/initial_rules.p
+	-lpr blood/blood.p blood/blood_rules.p
+	-lpr haemorrhagic/haemorrhagic.p haemorrhagic/haemorrhagic_rules.p
+	-lpr haemorrhagic/*.mp
+	-lpr haemolytic/haemolytic.p haemolytic/haemolytic_rules.p
+	-lpr haemolytic/*.mp
+	-lpr aplasia/aplasia.p aplasia/aplasia_rules.p
+	-lpr aplasia/*.mp
+	-lpr libs/shell_defs.p libs/shell.p libs/agent_shell.p libs/prover.p \
+		libs/act.p libs/main.p
+
+cleanup:
+	-rm main/*% main/%- main/dkbs.trace initial/*% initial/*-
+	-rm blood/*% blood/*- haemorrhagic/*% haemorrhagic/*-
+	-rm haemolytic/*% haemolytic*- aplasia/*% aplasia/*- libs/*% libs/*-
+	-rm main/view_*
+	-echo All done!
+

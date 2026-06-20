@@ -1,0 +1,621 @@
+
+
+/*	aplasia_rules.p
+ *
+ *
+ *	Rebecca Elks
+ *
+ *	August 1990
+ *
+ *	Rules for the agent 'Aplasia'
+ */
+true -> trace_flag;
+;;;	QUESTIONS
+
+;;;	Questions to determine if possible drug reaction or exposure to toxins.
+
+question([
+drug_admin
+'Does the cat have any history of recent drug administration by the owner' 
+' or veterinary surgeon ? ']);
+
+question([
+toxins
+'Does the owner know of any possible exposure to toxins ? ']);
+
+;;;	Question for specific anaemia inducing drugs.
+
+question([
+specific_drug
+'Was the drug administered any of those mentioned in the list ?']);
+
+;;;	Question to determine if the user wants to continue the consultation.
+
+question([
+continue
+'Do you wish to continue the consultation ?']);
+
+;;;	Questions to determine if signs of possible renal failure.
+
+question([
+stomatitis
+'Does the cat have stomatitis or gingivitis ?']);
+
+question([
+vomiting
+'Has there been any recent vomiting ?']);
+
+question([
+depression
+'Is the demeanor of the cat depressed or dull ?']);
+
+
+;;;	Questions concerning possible inflammatory causes of anaemia.
+
+/*	1.Question to determine if possible closed/open pyometra
+	However open case is not likely for an anaemia investigation!
+	Could be presented as a closed pyometra that is not very
+	obvious externally.
+*/
+question([
+abdominal_distension
+'Does the cat have an abnormally distended or swollen abdomen ?']);
+
+question([
+discharge
+'Is there any vulval discharge present ?']);
+
+;;;	2.Question to determine if possible chronic abscessation.
+
+question([
+abscessation
+'Does the cat have a history of chronic abcessation, for example due to '
+'persistant fighting ?']);
+
+;;;	Questions associated with ocular, CNS and renal forms of FIP.
+
+question([
+hyphaemia
+'On examining the cats eyes, is there any evidence of hyphaemia ?']);
+
+question([
+iridocyclitis
+'Is there any evidence of iridocyclitis ?']);
+
+question([
+retinitis
+'Are there signs of retinitis ?']);
+
+question([
+enlarged_kidnies
+'Are the kidnies enlarged on palpation ?']);
+
+question([
+ataxia
+'Is the cat ataxic ?']);
+
+question([
+paresis_paralysis
+'Are there any signs of paresis or paralysis ?']);
+
+question([
+nystagmus
+'Is nystagmus present ?']);
+
+question([
+fits
+'Has the cat had any fits recently ?']);
+
+question([
+hyperasthesia
+'Has the cat shown any signs of hyperasthesia ?']);
+
+
+;;;	Question for intermittant pyrexia associated with FIP.
+
+question([
+intermittant_pyrexia
+'Has the cat had an intermittant pyrexia of unexplained cause ?']);
+
+
+;;;	xxxxxxxQuestions for the blood agentxxxxxxxxxxxxxx
+/*
+question([
+creatinine_high
+'Does the cat have a high creatinine concentration ?']);
+
+question([
+bu_high
+'Is the blood urea high ?']);
+
+*/
+;;;	RULES
+
+;;;	Rule to determine if possible chronic renal failure.
+
+rule([
+chronic_renal_failure
+	[and
+		[eq drinking polydipsia]
+		[and
+			[eq urination polyuria]
+			[and
+				[eq duration chronic_illness_/_insidious_onset]
+				[and
+					[eq appetite decreased]
+					[and
+						[eq weight poor]
+						[or
+							lethargy
+							[or
+								depression
+								[or
+									stomatitis
+									vomiting
+								]
+							]
+						]
+					]
+				]
+			]
+		]
+	]
+]);
+
+
+
+/*	Rules to determine if possible Feline Infectious Peritonitis(FIP).
+	The wet form is generally obvious from the clinical signs(i.e. won't
+	be presented as an anaemia case), but has been included for the
+	sake of completeness.
+	The dry form can be more difficult to diagnose, and may be 
+	presented with pallor as a clinical sign prompting investigation 
+	of anaemia. 
+*/
+
+;;;	1. For the wet form.
+
+rule([
+fip_1
+	[and
+		[eq appetite decreased]
+		[and
+			lethargy
+			[and
+				[eq weight poor]
+				[and
+					abdominal_distension
+					[and
+						[eq duration chronic_illness_/_insidious_onset]
+						[and
+							[eq colour pale]
+							[or
+								[eq temperature pyrexia]
+								[or
+									icterus
+									[eq respiration dyspnoea]
+								]
+							]
+						]
+					]
+				]
+			]
+		]
+	]
+]);
+
+;;;	2. For the dry form.
+
+rule([
+fip_2
+	intermittant_pyrexia
+]);
+
+;;;	(a) Rule for FIP affecting the uveal tract
+
+rule([
+fip_3
+	[and
+		[eq temperature pyrexia]
+		[and
+			[eq appetite decreased]
+			[and
+				lethargy
+				uveal_tract_signs
+			]
+		]
+	]
+]);
+
+;;;	(b) Rule for FIP affecting the kidnies.	
+
+rule([
+fip_4
+	[and
+		[eq temperature pyrexia]
+		[and
+			[eq appetite decreased]
+			[and
+				lethargy
+				[or
+					chronic_renal_failure
+					enlarged_kidnies
+				]
+			]
+		]
+	]
+]);
+
+;;;	(c) Rule for FIP affecting the CNS
+
+rule([
+fip_5
+	[and
+		[eq temperature pyrexia]
+		[and
+			[eq appetite decreased]
+			[and
+				lethargy
+				cns_signs
+			]
+		]
+	]
+]);
+
+
+;;;	Rule for uveal tract symptoms.
+
+rule([
+uveal_tract_signs
+	[or
+		hyphaemia
+		[or
+			iridocyclitis
+			retinitis
+		]
+	]
+]);
+
+;;;	Rule for Central Nervous System(CNS) symptoms.
+
+rule([
+cns_signs
+	[or
+		ataxia
+		[or
+			paresis_paralysis
+			[or
+				nystagmus
+				[or
+					fits
+					hyperasthesia
+				]
+			]
+		]
+	]
+]);		
+						
+
+;;;	Rule to determine if possible pyometra.
+
+rule([
+pyometra
+	[and
+		[eq sex female]
+		[and
+			[not neutered]
+			[and
+				[eq apppetite decreased]
+				[and
+					[eq temperature pyrexia]
+					[or
+						abdominal_distension
+						discharge
+					]
+				]
+			]
+		]
+	]
+]);
+
+
+;;;	Rule to determine if possible exudative pleuresy.
+
+rule([
+exudative_pleuresy
+	[and
+		[not[eq respiration normal]]
+		[and
+			[eq duration acute_onset]
+			[or
+				depression
+				[eq temperature pyrexia]		
+			]
+		]
+	]
+]);
+
+								
+
+;;;	METARULES
+
+
+;;;	Metarule to pick up on drug administration .
+
+metarule([
+drug_induced
+	drug_admin
+	[
+		[print
+			[
+'There are certain drugs which are known to cause anaemia in cats.'
+'For example: chloramphenicol, oestrogens, aspirin, phenylbutazone, '
+'sulphonamides and propylthiouracil.  '
+			]
+		]
+		[investigate[specific_drug]]
+	]
+]);
+
+;;;	Metarule to continue if not specific anaemia inducing drugs.
+
+metarule([
+not_specific_drugs
+	[not specific_drug]
+	[
+		[print
+			[
+'There may be some possible idiosyncratic reaction with the drug given which '
+'may have caused the anaemia.'
+			]
+		]
+	[investigate [continue]]
+	]
+]);
+
+;;;	Metarule to pick up on specific drugs being the possible cause.
+
+metarule([
+anaemia_inducing_drug
+	specific_drug
+	[
+		[print
+			[
+'This is the probable cause of the anaemia.'
+			]
+		]
+		[quit]
+	]
+]);
+
+
+;;;	Metarules to pick up the investigation after possible drugs.
+
+metarule([
+not_drugs
+	[or
+		[and
+			drug_admin
+			continue
+		]
+		[not drug_admin]
+	]
+	[investigate[toxins]]
+]);
+
+metarule([
+possible_toxins
+		toxins
+	[
+		[print
+			[
+'The cat is particularly sensitive to the toxic effect of many chemicals.  '
+'Aromatic hydrocarbons are especially toxic, since phenolic compounds cannot '
+'easily be detoxified.  These are present in many domestic products including'
+' fungicides, disinfectants and wood preservatives.  Poisonning may easily '
+'occur after contamination of the coat and ingestion while grooming.  '
+'A careful consideration of the type of toxin should be made, since this may be'' the cause of the anaemia.'
+
+			]
+		]
+		[quit]
+	]
+]);
+
+
+;;;	Metarule to end the consultation if the user wishes.
+
+metarule([
+finish
+	[not continue]
+	[
+		[print
+			['***END***']
+		]
+	[quit]
+	]
+]);
+
+;;;	Metarule if neither drugs nor toxins, to look at possible renal failure.
+
+metarule([
+not_toxins
+	[or
+		[and
+			[not drug_admin]
+			[not toxins]
+		]
+		[and
+			drug_admin
+			[and
+				[not toxins]
+				continue
+			]
+		]
+	]
+	[investigate[chronic_renal_failure]]
+]);
+		
+
+
+;;;	Metarule to pick up on chronic renal failure.
+
+metarule([
+chronic_renal_failure_anaemia
+	chronic_renal_failure
+	[
+		[print
+			[
+'The clinical signs and category of anaemia are suggestive of chronic renal '
+'failure.  In order to verify this diagnosis the blood urea and creatinine '
+'should be determined.  '
+			]
+		]
+	[investigate[bu_high creatinine_high]]
+	]
+]);
+
+/* will need to go back to the blood agent here and then have metarules to confirm or refute this diagnosis on the basis of the results*/
+
+;;;	Metarule to investigate the possibility of FIP.
+
+metarule([
+possible_fip
+	[not chronic_renal_failure]
+	[investigate[abdomina_istension fip_1 fip_2 fip_3 fip_4 fip_5 ]]
+]);
+
+
+;;;	Metarule to pick up on FIP as the possible cause.
+
+metarule([
+fip
+	[or
+		fip_1
+		[or
+			fip_2
+			[or
+				fip_3
+				[or
+					fip_4
+					fip_5
+				]
+			]
+		]
+	]
+	[
+		[print
+			[
+'The clinical signs and category of anaemia are suggestive of Feline Infectious'
+' Peritonitis.  It is advisable to carry out serology to confirm this.  '
+'Interpretation of FIP titres can be difficult and depends on a variety of '
+'factors.\n For a discussion of this  topic refer to "Interpretation of Feline '
+'Coronavirus Serology" by D. Addie, In Practice vol. 11, No. 6'
+			]
+		]
+	[quit]
+	]
+]);
+
+;;;	Metarule to investigate the possibility of chronic inflammmation.
+
+metarule([
+chronic_inflammation
+	[and
+		[not fip_1]
+		[and
+			[not fip_2]
+			[and
+				[not fip_3]
+				[and
+					[not fip_4]
+					[not fip_5]
+				]
+			]
+		]
+	]
+	[investigate[pyometra]]
+]);
+
+;;;	Metarule to pick up on pyometra as the possible cause.
+
+metarule([
+pyometra_anaemia
+	pyometra
+	[
+		[print
+			[
+'The history is suggestive of a pyometra.  Abdominal radiography may be helpful'
+'in confirming the diagnosis.  Ovariohysterectomy is the treatment of choice, '
+'together with antiobiotics and fluid therapy as required.'
+			]
+		]
+	[quit]
+	]
+]);
+
+;;;	Metarule to investigate the possibility of exudative pleuresy.
+
+metarule([
+possible_exudative_pleuresy
+	[not pyometra]
+	[investigate[exudative_pleuresy]]
+]);
+
+;;;	Metarule to pick up on exudative pleuresy as the cause.
+
+metarule([
+exudative_pleuresy_anaemia
+	exudative_pleuresy
+	[
+		[print
+			[
+'The history and clinical signs are suggestive of exudative pleuresy.  '
+'Radiography may be helpful in confirming the diagnosis, taking care not to '
+'stress the cat.  Thoracocentesis may also be useful, with subsequent bacterial'
+'culture and sensitivity if treatment is to be attempted.'
+			]
+		]
+	[quit]
+	]
+]);
+
+;;;	Metarule to investigate the possibility of chronic abscessation.
+
+metarule([
+possible_chronic_abscessation
+	[not exudative_pleuresy]
+	[investigate[abscessation]]
+]);
+
+;;;	Metarule to pick up on chronic abscessation as the cause.
+
+metarule([
+chronic_abscessation
+	abscessation
+	[
+		[print
+			[
+'The history points to chronic infection as being the cause of the anaemia.  '
+			]
+		]
+	[quit]
+	]
+]);
+
+
+;;;	Metarule to pick up on idiopathic anaemia if the cause cannot be found.
+
+metarule([
+idiopathic_anaemia
+	[not abscessation]
+	[
+		[print
+			[
+'Consider any further causes of possible inflammation.  If there are none, the '
+'cause appears to be idiopathic.'
+			]
+		]
+	[quit]
+	]
+]);

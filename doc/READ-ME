@@ -1,0 +1,11 @@
+.../dkb-1.0/docs/...
+
+This directory contains documentation files for the dkb system. They are all in
+SunOS -man format. See the Sun manual `Formatting Documents'. The entire
+documentation can be produced by typing `make'. The file `man.tr' will
+then contain documentation in troff(1) format. To produce text-file output
+(with no fancy formatting codes) type `make pr' instead. The file `man.tx'
+will then contain sn spproximation of the documents which can be produced on
+a line printer.
+
+MJW Jan 1990

@@ -1,0 +1,99 @@
+Sequence  : 87 From : reader To : blood Type : (Default: Respond)
+Value     : 31.0
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 88 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%pcv%Forward Chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 89 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%pcv%Meta-chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 90 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normocytic%Meta-chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 91 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normocytic%Evaluating goal normocytic
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 92 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normocytic%Evaluating goal mcv
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 93 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normocytic%Forward Chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 94 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normocytic%Evaluating goal 44
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 95 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normocytic%Forward Chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 96 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normocytic%Meta-chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 97 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%microcytic%Meta-chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 98 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%microcytic%Evaluating goal microcytic
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 99 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%microcytic%Evaluating goal mcv
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 100 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%microcytic%Forward Chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 101 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%microcytic%Evaluating goal 44
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 102 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%microcytic%Forward Chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 103 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%microcytic%Meta-chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 104 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%macrocytic%Meta-chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 105 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%macrocytic%Evaluating goal macrocytic
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 106 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%macrocytic%Evaluating goal mcv
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 107 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%macrocytic%Forward Chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 108 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%macrocytic%Evaluating goal 56
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 109 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%macrocytic%Forward Chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 110 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%macrocytic%Meta-chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 111 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normochromic%Meta-chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 112 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normochromic%Evaluating goal normochromic
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 113 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normochromic%Evaluating goal mchc
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 114 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normochromic%Forward Chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 115 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normochromic%Evaluating goal 29
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 116 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normochromic%Forward Chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 117 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normochromic%Evaluating goal mchc
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 118 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normochromic%Forward Chaining
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Sequence  : 119 From : blood To : wintool Type : (Default: Respond)
+Value     : Sleeping%normochromic%Evaluating goal 34
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

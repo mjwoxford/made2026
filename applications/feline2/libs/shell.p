@@ -1,0 +1,717 @@
+
+/*  applications/feline2/libs/shell.p
+ *
+ *  M J Wooldridge
+ *  January 1990
+ *
+ *  A POP-11 Expert System Shell for DAI systems.
+ */
+
+    /* First load the definitions file (if not already loaded) */
+
+vars	apply_body;
+
+if isundef(apply_body) then
+	compile('$made/applications/feline/libs/shell_defs.p');
+endif;
+   
+/*
+ *  Now we are ready to deal with the functions themselves
+ *  We start with some general, everyday functions
+ */
+
+    /* my_pr() handles output in possibly distributed systems */
+
+define  my_pr(txt);
+lvars	txt;
+    if operation_mode = DISTRIBUTED then
+        pop11_output_request(txt);
+    else
+        pr(txt);
+    endif;
+enddefine;
+ 
+    /* pr1() uses my_pr() to rint out a list of items */
+
+define  pr1(arglist);
+
+    lvars    arg arglist;
+
+    for arg in arglist do
+        my_pr(arg);
+    endfor;
+    my_pr('\n');
+
+enddefine;
+
+    /* prints out the trace message if trace flag set */
+
+define  shell_trace(arg);
+lvars	arg;
+    if not(isundef(trace_flag)) and
+        trace_flag = true
+    then
+	if dist_trace_flag = true then
+       		 my_pr(arg);
+	else
+		npr(arg);
+	endif;
+    endif;
+
+enddefine;
+
+
+/*   quit() is a special function that should only be called if the
+ *   backward chainer was invoked from a function called `startup()'. When
+ *  called, `quit()' uses the exitfrom() standard function to return control
+ *  to the system.
+ */
+
+define  quit();
+
+    shell_trace(['[Trace] : Quitting via quit()']);
+
+    if not(isundef(startup)) then
+        ;;; my_pr('\n*** Quitting Normally\n\n');
+        exitfrom(startup);
+    else
+        mishap('Quit was called when startup was not defined.',[ quit ]);
+    endif;
+
+enddefine;
+
+    /* next functions declare things to the system */
+
+define  add_a_thing(type, defn, defnbase, namelist) -> ndefnbase -> nnamebase;
+
+    lvars type defn defnbase namelist ndefnbase nnamebase nm dummy;
+
+    defn(1) -> nm;
+    database -> dummy;
+
+    if isundef(defnbase) then
+        [] -> database;
+        [] -> namelist;
+    else
+        defnbase -> database;
+    endif;
+   
+    if present([^nm ==]) then
+        pr1(['WARNING - redefining ' ^type ' called ' ^nm]); 
+        remove([^nm ==]); 
+    endif;
+
+    add(defn);
+    database -> ndefnbase;
+
+    if not(member(nm,namelist)) then
+        [ ^nm ] <> namelist -> nnamebase;
+    else
+        namelist -> nnamebase;
+    endif;
+
+    dummy -> database;
+
+enddefine;  
+    
+define  rule(defn);
+        add_a_thing("rule",defn,rulebase,rules) -> rulebase -> rules;
+enddefine;
+
+define  question(defn);
+    add_a_thing("question",defn,questionbase,questions) -> questionbase -> questions;
+enddefine;
+
+define  metarule(defn);
+    add_a_thing("meta_rule", defn, metarulebase, metarules) -> metarulebase ->metarules;
+enddefine;
+
+define  value(defn);
+    add_a_thing("value",defn,valbase,vals) -> valbase -> vals;
+enddefine;
+
+        /* the following two functions keep track of things firing */
+
+define  fire(name);
+
+    if isundef(fired) then
+        [ ^name ] -> fired;
+    else
+        fired <> [ ^name ] -> fired;
+    endif;
+
+enddefine;
+
+define  has_fired(nm) -> retval;
+
+    lvars    retval;
+
+    false -> retval;
+
+    if not(isundef(fired))  then
+        member(nm, fired) -> retval;
+    endif;
+
+enddefine;
+
+    /* the next three functions form the basis of the forward chainer */
+
+define  can_fire(cond) -> retval;
+
+    lvars  cond retval tmp;
+
+    false -> retval;
+    if islist(cond) then
+
+        if cond(1) = "and" then
+            can_fire(cond(2)) and can_fire(cond(3)) -> retval;
+        endif;
+
+        if cond(1) = "or" then
+            can_fire(cond(2)) or can_fire(cond(3)) -> retval;
+        endif;
+
+        if cond(1) = "not" then
+            if isword(cond(2)) then
+                    if isfact(cond(2)) then
+                        not(getfact(cond(2))) -> retval;
+                    endif;
+            else
+                    not(can_fire(cond(2))) -> retval;
+            endif;
+        endif;
+
+    if cond(1) = "gt" then
+        if isfact(cond(2)) then
+            if isfact(cond(3)) then
+                getfact(cond(2)) > getfact(cond(3)) -> retval;
+            elseif isnumber(cond(3)) then
+                getfact(cond(2)) > cond(3) -> retval;
+            endif;
+        endif;
+    endif;
+
+    if cond(1) = "lt" then
+        if isfact(cond(2)) then
+            if isfact(cond(3)) then
+                getfact(cond(2)) < getfact(cond(3)) -> retval;
+            elseif isnumber(cond(3)) then
+                getfact(cond(2)) < cond(3) -> retval;
+            endif;
+        endif;
+    endif;
+
+    if cond(1) = "eq" then
+        if isfact(cond(2)) then
+            if isfact(cond(3)) then
+                getfact(cond(2)) = getfact(cond(3)) -> retval;
+            else
+                getfact(cond(2)) = cond(3) -> retval;
+            endif;
+        endif;
+    endif;
+
+
+    elseif isfact(cond) then
+        getfact(cond) -> retval;
+    endif;
+
+enddefine;
+
+;;; one_step_forward() goes once through the forward chainer in sequence
+
+define  one_step_forward -> retval;
+
+    lvars retval;
+
+    ;;; first the local function one_step_forward_aux(...)
+
+    define  one_step_forward_aux -> retval;
+            lvars retval fcrule nm;
+
+            shell_trace(['[Trace] : Forward chaining one step']);
+
+            false -> retval;
+
+            for fcrule in rulebase do
+                if      not(has_fired(fcrule(1))) and
+                        can_fire(fcrule(2))
+                then
+            fcrule(1) -> nm;
+                    shell_trace([ '[Trace] : Firing fc rule' ^nm]);
+                        fire(nm);
+                    assert(nm, true);
+                        true -> retval;
+                endif;
+            endfor;
+    enddefine;
+
+    if not(fc_flag = false) then
+        one_step_forward_aux() -> retval;
+    endif;
+
+enddefine;
+
+define  forward_chain();
+
+    ;;; first the local function forward_chain_aux
+
+    define  forward_chain_aux();
+
+        lvars fired_flag;
+
+        shell_trace([ '[Trace] : Calling forward_chainer' ]);
+ 
+        true -> fired_flag;
+
+        while fired_flag do
+                one_step_forward() -> fired_flag;
+        endwhile;
+
+    enddefine;
+
+	;;; update status
+
+	'Forward Chaining' -> current_action;
+	update_status();
+
+    ;;; now the main function definition
+
+    if not(fc_flag = false) then
+        forward_chain_aux();
+    endif;
+
+enddefine;
+
+    /* the isX funtions return true is their arguments are a X */
+
+define  is_a_thing(name,namelist) -> retval;
+
+    if(isundef(namelist)) then
+        false -> retval;
+    else
+        member(name,namelist) -> retval;
+    endif;
+enddefine;
+
+define  isrule(name) -> retval;
+    is_a_thing(name,rules) -> retval;
+enddefine;
+
+define  ismetarule(mrule) -> retval;
+    is_a_thing(mrule,metarules) -> retval;
+enddefine;
+
+define  isquestion(name) -> retval;
+    is_a_thing(name, questions) -> retval;
+enddefine;
+
+define  isvalue(name) -> retval;
+    is_a_thing(name,vals) -> retval;
+enddefine;
+
+    /* isfact is a special case */
+
+define  isfact(name) -> retval;
+
+    ;;; first the local function is_fact_aux
+
+    define  isfact_aux(name) -> retval;
+
+        false -> retval;
+
+        for fact in facts do
+                if hd(fact) = name then
+                    true -> retval;
+                endif;
+            endfor;
+
+    enddefine;
+
+    ;;; now the main function definition
+
+    if isundef(facts) then
+        false -> retval;
+    else
+        isfact_aux(name) -> retval;
+    endif;
+
+enddefine;
+
+    /* the ask() function is the basic input mechanism */
+
+define  ask(name) -> retval;
+
+    lvars    name resp flag dummy ;
+
+	'Asking ' >< name -> current_action;
+	'Sleeping' -> current_status;
+	update_status();
+
+    "noval" -> resp;
+    "noval" -> retval;
+
+    for question in questionbase do
+
+        if hd(question) = name then
+            tl(question) -> dummy;
+
+        /* print all the things in the question defn  */
+
+            until dummy = [] do
+                my_pr(hd(dummy));
+            my_pr('\n');
+                tl(dummy) -> dummy;
+            enduntil;
+
+        /* now loop until the idiot answers OK */
+
+            until (resp = "y") or (resp = "n")  do
+                my_pr('Please answer y or n\n');
+        if operation_mode = DISTRIBUTED then
+            pop11_input_request() -> resp;
+        else
+                    itemread() -> resp;
+        endif;
+            enduntil;
+            if resp = "y" then
+                true -> retval;
+            else
+                false -> retval;
+            endif;
+        endif;
+    endfor;
+
+enddefine;
+
+    /* the getval() function gets a numeric value */
+
+define  getval(name) -> retval;
+
+    lvars    name resp flag dummy ;
+
+	'Asking ' >< name -> current_action;
+	'Sleeping' -> current_status;
+	update_status();
+
+    "noval" -> resp;
+    "noval" -> retval;
+
+    for val in valbase do
+
+        if hd(val) = name then
+            tl(val) -> dummy;
+
+        /* print all the things in the question defn  */
+
+            until dummy = [] do
+                my_pr(hd(dummy));
+        my_pr('\n');
+                tl(dummy) -> dummy;
+            enduntil;
+
+        /* now loop until the idiot answers OK */
+
+            until isnumber(resp)  do
+                my_pr('Please enter a numeric value\n');
+        	if operation_mode = DISTRIBUTED then
+            		pop11_input_request() -> resp;
+        	else
+            	    my_pr('> ');
+                    itemread() -> resp;
+        	endif;
+            enduntil;
+         endif;
+    endfor;
+
+    resp -> retval;
+
+enddefine;
+
+    /* the following 4 functions deal with facts */
+
+define  assert(name,val);
+
+    if isundef(facts) then
+        [ [^name ^val] ] -> facts;
+    else
+        facts <> [ [^name ^val] ] -> facts;
+    endif;
+
+enddefine;
+
+define  retract(nm);
+
+    lvars tmp tmpfact;
+
+    if isfact(nm) then
+        getfact(nm) -> tmp;
+        [^nm ^tmp] -> tmpfact;
+        delete(tmpfact, facts) -> facts;
+    delete(nm,fired)->fired;
+    else
+        mishap('Attempted to retract a non-existent fact', [^nm]);
+    endif;
+
+enddefine;
+
+define  getfact(name) -> retval;
+
+    "noval" -> retval;
+
+    for fact in facts do
+        if hd(fact) = name then
+            hd(tl(fact)) -> retval;
+        endif;
+    endfor;
+
+enddefine;
+
+    /* clear removes all facts from working memory */
+
+define  clear();
+
+    shell_trace([ '[Trace] : Clearing working memory' ]);
+    [] -> facts;
+    [] -> fired;
+    
+enddefine;
+
+    /* the following functions deal with backward chaining */
+
+define  apply_body(body) -> retval;
+
+    "noval" -> retval;
+
+    ;;; if strategy is forward_backward chaining, the forward one step
+
+    if strategy = FORWARD_BACKWARD then
+        one_step_forward();
+    endif;
+
+    if islist(body) then
+
+        if body(1) = "and" then
+            apply_body(body(2)) and apply_body(body(3)) -> retval;
+        endif;
+
+        if body(1) = "or" then
+            apply_body(body(2)) or apply_body(body(3)) -> retval;
+        endif;
+
+        if body(1) = "not" then
+            not(apply_body(body(2))) -> retval;
+        endif;
+
+    if body(1) = "gt" then
+        apply_body(body(2)) > apply_body(body(3)) -> retval;
+    endif;
+
+    if body(1) = "lt" then
+        apply_body(body(2)) < apply_body(body(3)) -> retval;
+    endif;
+
+    if body(1) = "eq" then
+        if isvalue(body(3)) or isnumber(body(3)) then
+            apply_body(body(2)) = apply_body(body(3)) -> retval;
+        elseif isfact(body(2)) then
+		getfact(body(2)) = body(3) -> retval;
+	else
+            apply_body(body(2)) = body(3) -> retval;
+        endif;
+    endif;
+
+    else
+            evaluate(body) -> retval;
+    endif;
+
+enddefine;
+
+define  apply_rule(name) -> retval;
+
+    lvars body ;
+
+    for rule in rulebase do
+        if hd(rule) = name then
+            hd(tl(rule)) -> body;
+        endif;
+    endfor;
+
+    apply_body(body) -> retval;
+
+enddefine;
+
+define  evaluate(name) -> retval;
+
+    lvars new_fact_flag ag type dummy;
+
+    shell_trace([ '[Trace] : Backward chaining to evaluate goal '  ^name]);
+	'Evaluating goal ' >< name -> current_action;
+	update_status();
+
+    if not(has_fired(name)) then
+        fire(name);
+    endif;
+
+    false -> new_fact_flag;
+    "noval" -> retval;
+
+    if isfact(name) then
+
+        getfact(name) -> retval;
+
+    elseif isquestion(name) then
+
+        ask(name) -> retval;
+        true -> new_fact_flag;
+
+    elseif isrule(name) then
+
+        apply_rule(name) -> retval;
+        true -> new_fact_flag;
+
+    elseif isvalue(name) then
+
+    getval(name) -> retval;
+    true -> new_fact_flag;
+
+    elseif (operation_mode = DISTRIBUTED) and isword(name) then
+        if remote(name) then
+            get_agent_who_knows(name) -> ag;
+
+		'Requesting ' >< name >< ' from ' >< ag -> current_action;
+		'Sleeping' -> current_status;
+		update_status();
+
+            pop11_send(ag,MADE_DG_USER, [[request [^feline_agent_name ^name]]]);
+		pop11_raw_receive() -> ag -> type -> dummy;
+		hd(tl(hd(tl(dummy)))) -> retval;
+		'Active' -> current_status;
+		update_status();
+
+            true -> new_fact_flag;
+        endif;
+    else
+
+        name -> retval;
+
+    endif;
+
+    ;;; add fact to working memory if its newly discovered
+
+    if new_fact_flag then
+        assert(name,retval);
+    endif;
+
+    ;;; if strategy is 'mixed mode' then forward chain
+
+    if strategy = MIXED_MODE then
+        forward_chain();
+    endif;
+
+    ;;; if there are any meta-rules nand we've added a fact to working memory
+    ;;; then call the meta-rule chainer
+
+    if not(isundef(metarules)) and new_fact_flag then
+        meta_chain();
+    endif;
+
+enddefine;
+
+    /* the following function deals with meta-rules */
+
+define  meta_chain();
+
+    ;;; now the local function `actions(...)' which takes a single
+    ;;; argument, a sequence of actions, and executes them.
+
+    define  actions(codelist);
+
+        lvars    item    action dummy;
+
+        if islist(codelist(1)) then
+            for action in codelist do
+                actions(action);
+            endfor;
+        elseif codelist(1) = "print" then
+            pr1(codelist(2));
+        elseif codelist(1) = "investigate" then
+            investigate(codelist(2));
+        elseif codelist(1) = "shell_trace" then
+            true -> trace_flag;
+        elseif codelist(1) = "noshell_trace" then
+            false -> trace_flag;
+        elseif codelist(1) = "quit" then
+            quit();
+   	 elseif codelist(1) = "pop" then
+        	popval(codelist(2));
+    	elseif codelist(1) = "forward_chain" then
+       	 	fc_flag -> dummy;
+      	  	true -> fc_flag;
+        	forward_chain();
+        	dummy -> fc_flag;
+    	elseif codelist(1) = "clear" then
+        	clear();
+	elseif codelist(1) = "send" then
+	
+		pop11_send(
+			codelist(2),	;;; agent name
+			codelist(3),	;;; datagram type
+			codelist(4)	;;; value
+		);
+	else
+        	mishap('Illegal action', [^codelist]);
+        endif;
+    enddefine;
+
+    ;;; now the local function meta_chain_aux
+
+    define  meta_chain_aux();
+            lvars mrule nm cond code;
+
+        shell_trace([ '[Trace] : Calling meta rule chainer' ]); facts ==>
+        for mrule in metarulebase do
+                mrule(1) -> nm;
+                mrule(2) -> cond;
+                mrule(3) -> code;
+
+                if can_fire(cond) and not(has_fired(nm)) then
+                    shell_trace([ '[Trace] : Firing meta-rule ' ^nm]);
+                    fire(nm);
+                        actions(code);
+                endif;
+            endfor;
+    enddefine;
+
+    ;;; now the main function
+
+    if not(mrc_flag = false) then
+
+	'Meta-chaining' -> current_action;
+	update_status();
+
+        meta_chain_aux();
+    endif;
+
+enddefine;
+
+    /* investigate() calls evaluate on each of its arguments */
+
+define  investigate(inv_list);
+
+    lvars each;
+
+    for each in inv_list do
+
+	each -> current_goal;
+	update_status();
+
+        if not(isfact(each)) then
+            evaluate(each);
+        endif;
+
+    endfor;
+
+enddefine;
+
+    /* THE END */

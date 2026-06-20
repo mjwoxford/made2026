@@ -1,0 +1,19 @@
+/* system_agents.h
+ *
+ * M J Wooldridge
+ * June 1990
+ *
+ * Default names for all system agents
+ */
+ 
+	/* the user I/O window */
+	
+#define	MADE_SYSTEM_AGENT_USER_IO		"reader"
+
+	/* the application agent window manager */
+	
+#define	MADE_SYSTEM_AGENT_WINDOW_MANAGER	"agwintool"
+
+	/* the debugger */
+
+#define	MADE_SYSTEM_AGENT_DEBUGGER		"debugger"
