@@ -4,7 +4,7 @@ This codebase represents my first work on multi-agent systems, at the start of m
 
 The platform was implemented on Sun 3/60 workstations, using the SunView interface. It supported communication across networks using RPCs, which seemed easier to get up and running that fiddling directly with ports.
 
-Agents are UNIX processes. Interprocess communication is done via FIFOs. I used the POP-11 platform for buuilding agents because it supported multiple AI language (LISP and PROLOG) as well as the POP-11 language. 
+Agents are UNIX processes. Interprocess communication is done via FIFOs. I used the POP-11 platform for building agents because it supported multiple AI language (LISP and PROLOG) as well as the POP-11 language. 
 
 Agents are essentially expert systems; there is a POP-11 expert system shell in there as well. The applications directory contains a sample animals system and a much larger FELINE system which was implemented by MSc student Rebecca Elks (a vet) for her MSC project. 
 
