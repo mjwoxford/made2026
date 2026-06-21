@@ -1,4 +1,4 @@
-MADE: The Multi-Agent Development Environment
+_MADE: The Multi-Agent Development Environment_
 
 This codebase represents my first work on multi-agent systems, at the start of my PhD. I sketched out the basic architecture for a cooperating expert system platform in early 1989, and started work in October 1989. Development continued until late 1990. 
 
