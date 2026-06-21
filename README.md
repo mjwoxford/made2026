@@ -15,3 +15,4 @@ In the intervening period I somehow lost the MP program, and I suspect some file
 The work was described in: M. Wooldridge, G. M. P. O’Hare, and R. Elks. FELINE — A Case Study in the Design and Implementation of a Co-operating Expert System. In Proceedings of the International Conference on Expert Systems and their Applications (Avignon-91), Avignon, France, May 1991.
 
 I am providing the code as a historical curiosity (CLAUDE said it was a "fascinating historial artifact"!)
+<img width="678" height="426" alt="image" src="https://github.com/user-attachments/assets/9e133a98-feba-4c00-b7ba-282d094fd632" />
