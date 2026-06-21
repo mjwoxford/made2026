@@ -12,7 +12,7 @@ The system came with 2 domain specific languages: the model parser (MP) program 
 
 In the intervening period I somehow lost the MP program, and I suspect some files are corrupted because I stopped implementation leaving various threads dangling.
 
-The work was described in: *M. Wooldridge, G. M. P. O’Hare, and R. Elks. FELINE — A Case Study in the Design and Implementation of a Co-operating Expert System. In Proceedings of the International Conference on Expert Systems and their Applications (Avignon-91), Avignon, France, May 1991.*
+The work was described in: *M. Wooldridge, G. M. P. O’Hare, and R. Elks. FELINE — A Case Study in the Design and Implementation of a Co-operating Expert System. In Proceedings of the International Conference on Expert Systems and their Applications (Avignon-91), Avignon, France, May 1991.* 
 
 CLAUDE said it was a "fascinating historial artifact", and since multi-agent systems are a thing again it seemed worth making public.
 
